@@ -9,7 +9,7 @@ export default function* translateSaga() {
 function* translate(action) {
   try {
     const result = yield axios.get(action.payload);
-    console.log('Saga result => ', result);
+    // console.log('Saga result => ', result);
 
     yield put({
       type: types.TRANSLATION_SUCCESS,

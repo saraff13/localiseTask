@@ -5,9 +5,9 @@ import {getTranslation} from '../store/actions/translateAction';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const API = {
-  en: 'https://mocki.io/v1/c7324898-e0d7-48bf-aaf0-50d0ffa845dc',
-  it: 'https://mocki.io/v1/0edb5bd3-dec9-4ceb-8c31-c9273d8112d2',
-  hn: 'https://mocki.io/v1/b19dccb1-0222-4075-a31b-cc43ae324644',
+  en: 'https://mocki.io/v1/adb96296-b379-4bde-87cb-5b737c6a46bf',
+  it: 'https://mocki.io/v1/125a0f74-2e77-434c-8897-0e2bc974a380',
+  hn: 'https://mocki.io/v1/f8e5c307-78b3-4e8c-bc90-9532e670d870',
 };
 
 class Home extends Component {
@@ -19,27 +19,31 @@ class Home extends Component {
       .then(data => {
         if (data) {
           this.setState({loadedData: JSON.parse(data)});
+        } else {
+          this.props.getTranslation(API.en);
         }
       })
-      .catch(error => console.log('Async error => ', error));
+      .catch(error => {
+        console.log('Async error => ', error);
+      });
   }
   render() {
     const {data} = this.props;
     const {loadedData} = this.state;
-    console.log(loadedData);
-    // console.log(data);
+    // console.log(loadedData);
+    console.log(data);
     return (
       <SafeAreaView>
         <Button
-          title="English"
+          title={'English'}
           onPress={() => this.props.getTranslation(API.en)}
         />
         <Button
-          title="Hindi"
+          title={'हिंदी'}
           onPress={() => this.props.getTranslation(API.hn)}
         />
         <Button
-          title="Italian"
+          title={'italiana'}
           onPress={() => this.props.getTranslation(API.it)}
         />
         <Text>
