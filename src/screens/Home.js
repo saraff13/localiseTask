@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, SafeAreaView, Text} from 'react-native';
+import {Button, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import {getTranslation} from '../store/actions/translateAction';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -15,6 +15,7 @@ class Home extends Component {
     loadedData: '',
   };
   componentDidMount() {
+    console.log('async');
     AsyncStorage.getItem('Lang')
       .then(data => {
         if (data) {
@@ -33,20 +34,23 @@ class Home extends Component {
     // console.log(loadedData);
     console.log(data);
     return (
-      <SafeAreaView>
-        <Button
-          title={'English'}
-          onPress={() => this.props.getTranslation(API.en)}
-        />
-        <Button
-          title={'हिंदी'}
-          onPress={() => this.props.getTranslation(API.hn)}
-        />
-        <Button
-          title={'italiana'}
-          onPress={() => this.props.getTranslation(API.it)}
-        />
-        <Text>
+      <SafeAreaView style={[styles.main]}>
+        <View style={[styles.languageBox]}>
+          <Button
+            title={'English'}
+            onPress={() => this.props.getTranslation(API.en)}
+          />
+          <Button
+            title={'हिंदी'}
+            onPress={() => this.props.getTranslation(API.hn)}
+          />
+          <Button
+            title={'italiana'}
+            onPress={() => this.props.getTranslation(API.it)}
+          />
+        </View>
+
+        <Text style={[styles.text]}>
           My Lang: {data ? data[0].how : loadedData && loadedData[0].how}
         </Text>
       </SafeAreaView>
@@ -59,3 +63,20 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {getTranslation})(Home);
+
+const styles = StyleSheet.create({
+  main: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  languageBox: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 50,
+    marginBottom: 150,
+  },
+  text: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+});
