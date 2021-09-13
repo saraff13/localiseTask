@@ -30,8 +30,6 @@ class Home extends Component {
   render() {
     const {data} = this.props;
     const {loadedData} = this.state;
-    // console.log(loadedData);
-    // console.log(data);
     return (
       <SafeAreaView style={[styles.main]}>
         <View style={[styles.languageBox]}>
