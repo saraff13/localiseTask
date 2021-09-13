@@ -15,7 +15,6 @@ class Home extends Component {
     loadedData: '',
   };
   componentDidMount() {
-    console.log('async');
     AsyncStorage.getItem('Lang')
       .then(data => {
         if (data) {
@@ -32,7 +31,7 @@ class Home extends Component {
     const {data} = this.props;
     const {loadedData} = this.state;
     // console.log(loadedData);
-    console.log(data);
+    // console.log(data);
     return (
       <SafeAreaView style={[styles.main]}>
         <View style={[styles.languageBox]}>
