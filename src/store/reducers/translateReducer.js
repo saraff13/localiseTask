@@ -12,7 +12,6 @@ export default (state = INITIAL_STATE, action) => {
     case types.TRANSLATION_START:
       return {
         ...state,
-        ...INITIAL_STATE,
         loading: true,
       };
 
@@ -20,14 +19,12 @@ export default (state = INITIAL_STATE, action) => {
       AsyncStorage.setItem('Lang', JSON.stringify(action.payload));
       return {
         ...state,
-        ...INITIAL_STATE,
         data: action.payload,
       };
 
     case types.TRANSLATION_FAIL:
       return {
         ...state,
-        ...INITIAL_STATE,
         error: action.payload,
       };
 

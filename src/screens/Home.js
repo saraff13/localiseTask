@@ -3,11 +3,16 @@ import {Button, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import {getTranslation} from '../store/actions/translateAction';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {
+  addLanguage,
+  deleteLanguage,
+  queryAllLanguages,
+} from '../databases/schema';
 
 const API = {
-  en: 'https://mocki.io/v1/adb96296-b379-4bde-87cb-5b737c6a46bf',
-  it: 'https://mocki.io/v1/125a0f74-2e77-434c-8897-0e2bc974a380',
-  hn: 'https://mocki.io/v1/f8e5c307-78b3-4e8c-bc90-9532e670d870',
+  en: 'https://mocki.io/v1/4b81fc7f-6886-4ca0-8a82-ecdeed8d244e',
+  it: 'https://mocki.io/v1/c4a8e3c6-4df5-4924-b82c-a071bcba52a1',
+  hn: 'https://mocki.io/v1/d534f590-0456-44d3-a0e8-f5529717e053',
 };
 
 class Home extends Component {
@@ -20,12 +25,43 @@ class Home extends Component {
         if (data) {
           this.setState({loadedData: JSON.parse(data)});
         } else {
-          this.props.getTranslation(API.en);
+          // this.props.getTranslation(API.en);
         }
       })
       .catch(error => {
         console.log('Async error => ', error);
       });
+  }
+  componentDidUpdate(prevProps) {
+    if (prevProps.data != this.props.data) {
+      const newData = this.props.data && this.props.data[0];
+      // console.log(newData);
+      const newLanguage = {
+        _id: newData.id,
+        name: newData.name,
+        how: newData.how,
+        boiledEgg: newData.boiledEgg,
+        softBoiledEgg: newData.softBoiledEgg,
+        choice: newData.choice,
+      };
+      // if (prevProps.data) {
+      //   // console.log('Previous Props => ', prevProps.data);
+      //   deleteLanguage(prevProps.data[0].id)
+      //     .then(() => console.log('successfully deleted'))
+      //     .catch(error => console.log('deletion error => ', error));
+      // }
+      // console.log(newLanguage);
+      addLanguage(newLanguage)
+        .then(() => console.log('successfully added'))
+        .catch(error => console.log('realm addition error => ', error));
+      queryAllLanguages()
+        .then(languages => {
+          console.log('query => ', languages);
+        })
+        .catch(error => console.log('query realm error => ', error));
+      return true;
+    }
+    return false;
   }
   render() {
     const {data} = this.props;
