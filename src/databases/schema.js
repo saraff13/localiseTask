@@ -2,14 +2,15 @@ import Realm from 'realm';
 
 export const Lang = {
   name: 'Lang',
-  primaryKey: '_id',
+  primaryKey: 'id',
   properties: {
-    _id: 'int',
+    id: 'int',
     name: 'string',
     how: 'string',
     boiledEgg: 'string',
     softBoiledEgg: 'string',
     choice: 'string',
+    active: 'string',
   },
 };
 
@@ -55,6 +56,44 @@ export const queryAllLanguages = () =>
       .catch(error => reject(error));
   });
 
+export const getLanguageData = languageID =>
+  new Promise((resolve, reject) => {
+    Realm.open(databaseOptions)
+      .then(realm => {
+        realm.write(() => {
+          let searchedLanguage = realm.objectForPrimaryKey('Lang', languageID);
+          resolve(searchedLanguage);
+        });
+      })
+      .catch(error => reject(error));
+  });
+
+export const updateStatus = (languageID, status) =>
+  new Promise((resolve, reject) => {
+    Realm.open(databaseOptions)
+      .then(realm => {
+        realm.write(() => {
+          let searchedLanguage = realm.objectForPrimaryKey('Lang', languageID);
+          searchedLanguage.active = status;
+          resolve(searchedLanguage);
+        });
+      })
+      .catch(error => reject(error));
+  });
+
+export const filterActiveLanguage = () =>
+  new Promise((resolve, reject) => {
+    Realm.open(databaseOptions)
+      .then(realm => {
+        realm.write(() => {
+          const langugaes = realm.objects('Lang');
+          const activeLang = langugaes.filtered("active='true'");
+          resolve(activeLang);
+        });
+      })
+      .catch(error => reject(error));
+  });
+
 export default new Realm(databaseOptions);
 
 // export default class RealmStore extends Component {
@@ -81,7 +120,7 @@ export default new Realm(databaseOptions);
 //       let task1, task2;
 //       realm.write(() => {
 //         task1 = realm.create('Lang', {
-//           _id: 1,
+//           id: 1,
 //           name: 'en',
 //           how: 'How do you want your egg today',
 //           boiledEgg: 'Boiled egg',

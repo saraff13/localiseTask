@@ -2,10 +2,12 @@ import React, {Component} from 'react';
 import {Button, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import {getTranslation} from '../store/actions/translateAction';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   addLanguage,
   deleteLanguage,
+  filterActiveLanguage,
+  updateStatus,
+  getLanguageData,
   queryAllLanguages,
 } from '../databases/schema';
 
@@ -20,30 +22,37 @@ class Home extends Component {
     loadedData: '',
   };
   componentDidMount() {
-    AsyncStorage.getItem('Lang')
-      .then(data => {
-        if (data) {
-          this.setState({loadedData: JSON.parse(data)});
+    filterActiveLanguage()
+      .then(language => {
+        if (language) {
+          console.log('filter success => ', language);
+          this.setState({loadedData: language[0]});
         } else {
-          // this.props.getTranslation(API.en);
+          this.props.getTranslation(API.en);
         }
       })
-      .catch(error => {
-        console.log('Async error => ', error);
-      });
+      .catch(error => console.log('filter error => ', error));
   }
   componentDidUpdate(prevProps) {
     if (prevProps.data != this.props.data) {
       const newData = this.props.data && this.props.data[0];
       // console.log(newData);
       const newLanguage = {
-        _id: newData.id,
+        id: newData.id,
         name: newData.name,
         how: newData.how,
         boiledEgg: newData.boiledEgg,
         softBoiledEgg: newData.softBoiledEgg,
         choice: newData.choice,
+        active: 'true',
       };
+      if (prevProps.data) {
+        updateStatus(prevProps.data[0].id, 'false')
+          .then(() =>
+            console.log('successfully disabled => ', prevProps.data[0].id),
+          )
+          .catch(error => console.log('disabled error => ', error));
+      }
       // if (prevProps.data) {
       //   // console.log('Previous Props => ', prevProps.data);
       //   deleteLanguage(prevProps.data[0].id)
@@ -59,10 +68,44 @@ class Home extends Component {
           console.log('query => ', languages);
         })
         .catch(error => console.log('query realm error => ', error));
+      this.setState({loadedData: this.props.data[0]});
       return true;
     }
     return false;
   }
+  changeLanguage = (api, id) => {
+    // console.log(this.state.loadedData);
+    if (this.state.loadedData && this.state.loadedData.id === id) {
+      return;
+    }
+    getLanguageData(id)
+      .then(language => {
+        if (language) {
+          if (this.state.loadedData) {
+            updateStatus(this.state.loadedData.id, 'false')
+              .then(() =>
+                console.log(
+                  'successfully disabled => ',
+                  this.state.loadedData.id,
+                ),
+              )
+              .catch(error => console.log('disabled error => ', error));
+          }
+          updateStatus(id, 'true')
+            .then(value => {
+              console.log('successfully enabled => ', id);
+              this.setState({loadedData: value});
+            })
+            .catch(error => console.log('enabled error => ', error));
+          // console.log('get language data => ', language);
+        } else {
+          this.props.getTranslation(api);
+        }
+      })
+      .catch(error => {
+        console.log('get language data error => ', error);
+      });
+  };
   render() {
     const {data} = this.props;
     const {loadedData} = this.state;
@@ -71,20 +114,20 @@ class Home extends Component {
         <View style={[styles.languageBox]}>
           <Button
             title={'English'}
-            onPress={() => this.props.getTranslation(API.en)}
+            onPress={() => this.changeLanguage(API.en, 1)}
           />
           <Button
             title={'हिंदी'}
-            onPress={() => this.props.getTranslation(API.hn)}
+            onPress={() => this.changeLanguage(API.hn, 2)}
           />
           <Button
             title={'italiana'}
-            onPress={() => this.props.getTranslation(API.it)}
+            onPress={() => this.changeLanguage(API.it, 3)}
           />
         </View>
 
         <Text style={[styles.text]}>
-          My Lang: {data ? data[0].how : loadedData && loadedData[0].how}
+          My Lang: {loadedData && loadedData.how}
         </Text>
       </SafeAreaView>
     );

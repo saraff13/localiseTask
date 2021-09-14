@@ -1,5 +1,4 @@
 import * as types from '../actionTypes';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const INITIAL_STATE = {
   loading: false,
@@ -16,7 +15,6 @@ export default (state = INITIAL_STATE, action) => {
       };
 
     case types.TRANSLATION_SUCCESS:
-      AsyncStorage.setItem('Lang', JSON.stringify(action.payload));
       return {
         ...state,
         data: action.payload,
