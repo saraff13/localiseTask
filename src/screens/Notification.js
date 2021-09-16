@@ -1,25 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {View, Text, StyleSheet, Button} from 'react-native';
-import {filterActiveLanguage} from '../databases/schema';
+import {useSelector} from 'react-redux';
 
 const Notification = ({navigation}) => {
-  const [notificationData, setnotificationData] = useState('');
-  useEffect(() => {
-    filterActiveLanguage()
-      .then(language => {
-        if (language.length) {
-          console.log('profile filter success => ', language);
-          setnotificationData(language[0]);
-        }
-      })
-      .catch(error => console.log('filter error => ', error));
-  }, []);
+  const data = useSelector(state => state.translateReducer.data);
+
   return (
     <View style={[styles.main]}>
       <Text style={[styles.text]}>Current language</Text>
-      <Text style={[styles.text]}>
-        {notificationData && notificationData.choice}
-      </Text>
+      <Text style={[styles.text]}>{data && data.choice}</Text>
       <View>
         <Button
           title="go to Home"

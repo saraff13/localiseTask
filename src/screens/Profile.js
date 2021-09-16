@@ -1,23 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {View, Text, StyleSheet, Button} from 'react-native';
-import {filterActiveLanguage} from '../databases/schema';
+import {useSelector} from 'react-redux';
 
 const Profile = ({navigation}) => {
-  const [profileData, setProfileData] = useState('');
-  useEffect(() => {
-    filterActiveLanguage()
-      .then(language => {
-        if (language.length) {
-          console.log('profile filter success => ', language);
-          setProfileData(language[0]);
-        }
-      })
-      .catch(error => console.log('filter error => ', error));
-  }, []);
+  const data = useSelector(state => state.translateReducer.data);
+
   return (
     <View style={[styles.main]}>
       <Text style={[styles.text]}>Current language</Text>
-      <Text style={[styles.text]}>{profileData && profileData.boiledEgg}</Text>
+      <Text style={[styles.text]}>{data && data.boiledEgg}</Text>
       <View>
         <Button
           title="go to Notifications"
