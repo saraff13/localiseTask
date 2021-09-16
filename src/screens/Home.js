@@ -4,20 +4,14 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getTranslation} from '../store/actions/translateAction';
 import {
   addLanguage,
-  deleteLanguage,
   filterActiveLanguage,
   updateStatus,
   getLanguageData,
   queryAllLanguages,
 } from '../databases/schema';
+import {API} from '../utils/api';
 
-const API = {
-  en: 'https://mocki.io/v1/0c9cdfaa-888c-4306-a0a4-09cf4027cb7c',
-  it: 'https://mocki.io/v1/f3ef7b2a-d151-4ed0-8dd0-1a12c765486e',
-  hn: 'https://mocki.io/v1/d39cab01-d2bb-4667-86cc-af54d4afe58f',
-};
-
-const Home = () => {
+const Home = ({navigation}) => {
   const [loadedData, setLoadedData] = useState('');
   const dispatch = useDispatch();
   const data = useSelector(state => state.translateReducer.data);
@@ -105,6 +99,13 @@ const Home = () => {
       </View>
 
       <Text style={[styles.text]}>My Lang: {loadedData && loadedData.how}</Text>
+
+      <View>
+        <Button
+          title="go to Profile"
+          onPress={() => navigation.navigate('Profile')}
+        />
+      </View>
     </SafeAreaView>
   );
 };
@@ -124,5 +125,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
     fontWeight: 'bold',
+    marginVertical: 20,
   },
 });
