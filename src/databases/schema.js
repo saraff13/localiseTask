@@ -44,51 +44,13 @@ export const deleteLanguage = languageID =>
       .catch(error => reject(error));
   });
 
-export const queryAllLanguages = () =>
+export const fetchSavedLanguage = () =>
   new Promise((resolve, reject) => {
     Realm.open(databaseOptions)
       .then(realm => {
         realm.write(() => {
           let allLanguage = realm.objects('Lang');
           resolve(allLanguage);
-        });
-      })
-      .catch(error => reject(error));
-  });
-
-export const getLanguageData = languageID =>
-  new Promise((resolve, reject) => {
-    Realm.open(databaseOptions)
-      .then(realm => {
-        realm.write(() => {
-          let searchedLanguage = realm.objectForPrimaryKey('Lang', languageID);
-          resolve(searchedLanguage);
-        });
-      })
-      .catch(error => reject(error));
-  });
-
-export const updateStatus = (languageID, status) =>
-  new Promise((resolve, reject) => {
-    Realm.open(databaseOptions)
-      .then(realm => {
-        realm.write(() => {
-          let searchedLanguage = realm.objectForPrimaryKey('Lang', languageID);
-          searchedLanguage.active = status;
-          resolve(searchedLanguage);
-        });
-      })
-      .catch(error => reject(error));
-  });
-
-export const filterActiveLanguage = () =>
-  new Promise((resolve, reject) => {
-    Realm.open(databaseOptions)
-      .then(realm => {
-        realm.write(() => {
-          const langugaes = realm.objects('Lang');
-          const activeLang = langugaes.filtered("active='true'");
-          resolve(activeLang);
         });
       })
       .catch(error => reject(error));

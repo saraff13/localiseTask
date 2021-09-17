@@ -1,3 +1,4 @@
+import {addLang} from '../../utils/RealmFunctions';
 import * as types from '../actionTypes';
 
 const INITIAL_STATE = {
@@ -15,6 +16,7 @@ export default (state = INITIAL_STATE, action) => {
       };
 
     case types.TRANSLATION_SUCCESS:
+      addLang(action.payload);
       return {
         ...state,
         data: action.payload,
@@ -24,6 +26,13 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+
+    case types.SET_TRANSLATION_DATA:
+      addLang(action.payload);
+      return {
+        ...state,
+        data: action.payload,
       };
 
     default:
