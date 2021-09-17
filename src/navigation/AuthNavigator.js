@@ -10,6 +10,7 @@ import {
   setTranslationData,
 } from '../store/actions/translateAction';
 import {useDispatch} from 'react-redux';
+import {API} from '../utils/api';
 
 const Stack = createStackNavigator();
 
