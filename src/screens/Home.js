@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {getTranslation} from '../store/actions/translateAction';
-import {API} from '../utils/Api';
+import {API} from '../utils/api';
 import {deleteLang} from '../utils/RealmFunctions';
 
 const Home = ({navigation}) => {
