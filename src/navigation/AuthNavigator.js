@@ -11,18 +11,20 @@ import {
 } from '../store/actions/translateAction';
 import {useDispatch} from 'react-redux';
 import {API} from '../utils/api';
+import {readLangFile} from '../utils/FileHandlingFunctions';
 
 const Stack = createStackNavigator();
 
 const AuthNavigator = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    fetchSavedLanguage()
-      .then(language => {
-        if (language.length) dispatch(setTranslationData(language[0]));
-        else dispatch(getTranslation(API.en));
-      })
-      .catch(error => console.log('query realm error => ', error));
+    readLangFile(dispatch, setTranslationData, getTranslation);
+    // fetchSavedLanguage()
+    //   .then(language => {
+    //     if (language.length) dispatch(setTranslationData(language[0]));
+    //     else dispatch(getTranslation(API.en));
+    //   })
+    //   .catch(error => console.log('query realm error => ', error));
   }, []);
   return (
     <NavigationContainer>

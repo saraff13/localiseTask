@@ -1,4 +1,4 @@
-import {updateLangFile} from '../../utils/FileHandlingFunctions';
+import {writeLangFile} from '../../utils/FileHandlingFunctions';
 import {addLang} from '../../utils/RealmFunctions';
 import * as types from '../actionTypes';
 
@@ -18,7 +18,7 @@ export default (state = INITIAL_STATE, action) => {
 
     case types.TRANSLATION_SUCCESS:
       addLang(action.payload);
-      updateLangFile(action.payload);
+      writeLangFile(action.payload);
       return {
         ...state,
         data: action.payload,
