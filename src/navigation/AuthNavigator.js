@@ -9,7 +9,7 @@ import {
   setTranslationData,
 } from '../store/actions/translateAction';
 import {useDispatch} from 'react-redux';
-import {readLangFile} from '../utils/FileHandlingFunctions';
+import {fetchSavedLangFile} from '../utils/FileHandlingFunctions';
 import {fetchSavedLang} from '../utils/RealmFunctions';
 
 const Stack = createStackNavigator();
@@ -17,8 +17,8 @@ const Stack = createStackNavigator();
 const AuthNavigator = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    // readLangFile(dispatch, setTranslationData, getTranslation);
-    fetchSavedLang(dispatch, setTranslationData, getTranslation);
+    fetchSavedLangFile(dispatch, setTranslationData, getTranslation);
+    // fetchSavedLang(dispatch, setTranslationData, getTranslation);
   }, []);
   return (
     <NavigationContainer>

@@ -13,7 +13,11 @@ export const writeLangFile = data => {
     });
 };
 
-export const readLangFile = (dispatch, setTranslationData, getTranslation) => {
+export const fetchSavedLangFile = (
+  dispatch,
+  setTranslationData,
+  getTranslation,
+) => {
   RNFS.readFile(path, 'utf8')
     .then(data => {
       // console.log('read Data => ', JSON.parse(data));
