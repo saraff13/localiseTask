@@ -11,7 +11,7 @@ const Profile = ({navigation}) => {
       <Text style={[styles.text]}>{data && data.boiledEgg}</Text>
       <View>
         <Button
-          title="go to Notifications"
+          title="Notifications"
           onPress={() => navigation.navigate('Notification')}
         />
       </View>

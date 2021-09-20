@@ -27,9 +27,10 @@ const Home = ({navigation}) => {
 
       <View>
         <Button
-          title="go to Profile"
+          title="Profile"
           onPress={() => navigation.navigate('Profile')}
         />
+        <Button title="Help" onPress={() => navigation.navigate('Help')} />
       </View>
     </SafeAreaView>
   );
