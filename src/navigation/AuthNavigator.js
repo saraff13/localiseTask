@@ -11,6 +11,7 @@ import {
 import {useDispatch} from 'react-redux';
 import {fetchSavedLangFile} from '../utils/FileHandlingFunctions';
 import {fetchSavedLang} from '../utils/RealmFunctions';
+import Help from '../screens/Help';
 
 const Stack = createStackNavigator();
 
@@ -26,6 +27,7 @@ const AuthNavigator = () => {
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="Notification" component={Notification} />
+        <Stack.Screen name="Help" component={Help} />
       </Stack.Navigator>
     </NavigationContainer>
   );

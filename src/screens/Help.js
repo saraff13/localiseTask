@@ -2,21 +2,21 @@ import React from 'react';
 import {View, Text, StyleSheet, Button} from 'react-native';
 import {useSelector} from 'react-redux';
 
-const Notification = ({navigation}) => {
+const Help = ({navigation}) => {
   const data = useSelector(state => state.translateReducer.data);
 
   return (
     <View style={[styles.main]}>
       <Text style={[styles.text]}>Current language</Text>
-      <Text style={[styles.text]}>{data && data.choice}</Text>
+      <Text style={[styles.text]}>{data && data.softBoiledEgg}</Text>
       <View>
-        <Button title="Home" onPress={() => navigation.navigate('Home')} />
+        <Button title="Home" onPress={() => navigation.goBack()} />
       </View>
     </View>
   );
 };
 
-export default Notification;
+export default Help;
 
 const styles = StyleSheet.create({
   main: {
