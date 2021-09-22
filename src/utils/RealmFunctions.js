@@ -6,16 +6,7 @@ import {
 import {API} from './api';
 
 export const addLang = data => {
-  const newLanguage = {
-    id: data.id,
-    name: data.name,
-    how: data.how,
-    boiledEgg: data.boiledEgg,
-    softBoiledEgg: data.softBoiledEgg,
-    choice: data.choice,
-    active: 'true',
-  };
-  addLanguage(newLanguage)
+  addLanguage(data)
     .then(() => console.log('successfully added'))
     .catch(error => console.log('realm addition error => ', error));
 };

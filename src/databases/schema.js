@@ -10,7 +10,6 @@ export const Lang = {
     boiledEgg: 'string',
     softBoiledEgg: 'string',
     choice: 'string',
-    active: 'string',
   },
 };
 
