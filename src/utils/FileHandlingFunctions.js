@@ -5,15 +5,15 @@ import CryptoJS from 'crypto-js';
 const path = RNFS.DocumentDirectoryPath + '/language.json';
 
 export const writeLangFile = data => {
-  var ciphertext = CryptoJS.AES.encrypt(
+  var encryptedData = CryptoJS.AES.encrypt(
     JSON.stringify(data),
     'secret key 123',
   ).toString();
-  console.log('encyption', ciphertext);
+  console.log('encypted data', encryptedData);
 
-  RNFS.writeFile(path, ciphertext, 'utf8')
+  RNFS.writeFile(path, encryptedData, 'utf8')
     .then(success => {
-      console.log('FILE WRITTEN!');
+      console.log('FILE WRITTEN!', success);
     })
     .catch(err => {
       console.log(err.message);
@@ -29,7 +29,7 @@ export const fetchSavedLangFile = (
     .then(data => {
       var bytes = CryptoJS.AES.decrypt(data, 'secret key 123');
       var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-      console.log(decryptedData);
+      console.log('decrypted data', decryptedData);
       // console.log('read Data => ', JSON.parse(data));
       dispatch(setTranslationData(decryptedData));
     })
