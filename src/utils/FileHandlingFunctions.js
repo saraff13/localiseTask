@@ -5,7 +5,7 @@ import CryptoJS from 'crypto-js';
 const path = RNFS.DocumentDirectoryPath + '/language.json';
 
 export const writeLangFile = data => {
-  var encryptedData = CryptoJS.AES.encrypt(
+  let encryptedData = CryptoJS.AES.encrypt(
     JSON.stringify(data),
     'secret key 123',
   ).toString();
@@ -27,8 +27,8 @@ export const fetchSavedLangFile = (
 ) => {
   RNFS.readFile(path, 'utf8')
     .then(data => {
-      var bytes = CryptoJS.AES.decrypt(data, 'secret key 123');
-      var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+      let bytes = CryptoJS.AES.decrypt(data, 'secret key 123');
+      let decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
       console.log('decrypted data', decryptedData);
       // console.log('read Data => ', JSON.parse(data));
       dispatch(setTranslationData(decryptedData));
