@@ -9,15 +9,9 @@ export const writeLangFile = data => {
     JSON.stringify(data),
     'secret key 123',
   ).toString();
-  console.log('encypted data', encryptedData);
-
   RNFS.writeFile(path, encryptedData, 'utf8')
-    .then(success => {
-      console.log('FILE WRITTEN!', success);
-    })
-    .catch(err => {
-      console.log(err.message);
-    });
+    .then(() => console.log('FILE WRITTEN!'))
+    .catch(err => console.log(err.message));
 };
 
 export const fetchSavedLangFile = (
@@ -27,10 +21,9 @@ export const fetchSavedLangFile = (
 ) => {
   RNFS.readFile(path, 'utf8')
     .then(data => {
+      // console.log('read Data => ', JSON.parse(data));
       let bytes = CryptoJS.AES.decrypt(data, 'secret key 123');
       let decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-      console.log('decrypted data', decryptedData);
-      // console.log('read Data => ', JSON.parse(data));
       dispatch(setTranslationData(decryptedData));
     })
     .catch(err => {

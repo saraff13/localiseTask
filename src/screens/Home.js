@@ -10,7 +10,7 @@ const Home = ({navigation}) => {
   const data = useSelector(state => state.translateReducer.data);
 
   const changeLanguage = (api, id) => {
-    if (data.id === id) return;
+    if (data && data.id === id) return;
     if (data) deleteLang(data);
     dispatch(getTranslation(api));
   };
