@@ -11,8 +11,8 @@ import {
 } from '../store/actions/translateAction';
 import {useDispatch} from 'react-redux';
 import {fetchSavedLangFile} from '../utils/FileHandlingFunctions';
-import {fetchSavedLang} from '../utils/RealmFunctions';
 import Help from '../screens/Help';
+import Banks from '../screens/Banks';
 
 const Stack = createStackNavigator();
 
@@ -30,6 +30,7 @@ const AuthNavigator = () => {
         <Stack.Screen name="Notification" component={Notification} />
         <Stack.Screen name="Help" component={Help} />
         <Stack.Screen name="Settings" component={Settings} />
+        <Stack.Screen name="Banks" component={Banks} />
       </Stack.Navigator>
     </NavigationContainer>
   );
