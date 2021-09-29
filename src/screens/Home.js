@@ -31,10 +31,7 @@ const Home = ({navigation}) => {
           onPress={() => navigation.navigate('Profile')}
         />
         <Button title="Help" onPress={() => navigation.navigate('Help')} />
-        <Button
-          title="Settings"
-          onPress={() => navigation.navigate('Settings')}
-        />
+        <Button title="Banks" onPress={() => navigation.navigate('Banks')} />
       </View>
     </SafeAreaView>
   );
